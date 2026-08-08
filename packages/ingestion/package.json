@@ -1,0 +1,17 @@
+{
+  "name": "@ai-job-platform/ingestion",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-job-platform/database": "workspace:*",
+    "@ai-job-platform/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

@@ -1,0 +1,89 @@
+services:
+  - type: web
+    name: ai-job-platform-api
+    runtime: node
+    region: singapore
+    plan: starter
+    buildCommand: corepack enable && NODE_ENV=development pnpm install --frozen-lockfile && pnpm db:generate
+    preDeployCommand: pnpm db:migrate:deploy
+    startCommand: pnpm api:start
+    healthCheckPath: /health/ready
+    maxShutdownDelaySeconds: 60
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APP_NAME
+        value: ai-job-aggregation-career-assistant
+      - key: APP_URL
+        sync: false
+      - key: API_URL
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: COOKIE_DOMAIN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_ACCESS_TOKEN_SECRET
+        sync: false
+      - key: JWT_REFRESH_TOKEN_SECRET
+        sync: false
+      - key: AI_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.1-flash-lite
+
+  - type: worker
+    name: ai-job-platform-worker
+    runtime: node
+    region: singapore
+    plan: starter
+    buildCommand: corepack enable && NODE_ENV=development pnpm install --frozen-lockfile && pnpm db:generate
+    startCommand: pnpm worker:start
+    maxShutdownDelaySeconds: 120
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_ACCESS_TOKEN_SECRET
+        sync: false
+      - key: JWT_REFRESH_TOKEN_SECRET
+        sync: false
+      - key: AI_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.1-flash-lite
+
+  - type: cron
+    name: ai-job-platform-ingestion-cron
+    runtime: node
+    region: singapore
+    schedule: "0 */6 * * *"
+    buildCommand: corepack enable && NODE_ENV=development pnpm install --frozen-lockfile && pnpm db:generate
+    startCommand: pnpm worker:ingest:once
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_ACCESS_TOKEN_SECRET
+        sync: false
+      - key: JWT_REFRESH_TOKEN_SECRET
+        sync: false
+      - key: AI_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.1-flash-lite

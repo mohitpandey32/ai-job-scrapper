@@ -1,0 +1,26 @@
+{
+  "name": "@ai-job-platform/worker",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/worker.ts",
+  "types": "src/worker.ts",
+  "scripts": {
+    "dev": "tsx watch src/worker.ts",
+    "start": "tsx src/worker.ts",
+    "ingest:once": "tsx src/run-ingestion-once.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-job-platform/config": "workspace:*",
+    "@ai-job-platform/database": "workspace:*",
+    "@ai-job-platform/ingestion": "workspace:*",
+    "@ai-job-platform/logger": "workspace:*",
+    "bullmq": "^5.61.2",
+    "ioredis": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

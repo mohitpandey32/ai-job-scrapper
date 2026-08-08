@@ -1,0 +1,44 @@
+{
+  "name": "@ai-job-platform/api",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/server.ts",
+  "types": "src/server.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-job-platform/config": "workspace:*",
+    "@ai-job-platform/database": "workspace:*",
+    "@ai-job-platform/ingestion": "workspace:*",
+    "@ai-job-platform/logger": "workspace:*",
+    "@ai-job-platform/validation": "workspace:*",
+    "@google/genai": "^2.15.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "jose": "^6.1.2",
+    "mammoth": "^1.12.0",
+    "multer": "^2.2.0",
+    "pdf-parse": "^2.4.5",
+    "pdfkit": "^0.19.1",
+    "pino-http": "^11.0.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^24.10.1",
+    "@types/pdf-parse": "^1.1.5",
+    "@types/pdfkit": "^0.17.6",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
