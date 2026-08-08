@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["nodejs_20", "pnpm"]
+nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["corepack enable && pnpm install --frozen-lockfile"]
+cmds = ["npm install -g pnpm@11.9.0 && pnpm install --frozen-lockfile"]
 
 [phases.build]
 cmds = ["pnpm db:generate"]
