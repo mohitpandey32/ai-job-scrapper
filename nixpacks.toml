@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["nodejs_20"]
+nixPkgs = ["nodejs_22", "pnpm"]
 
 [phases.install]
-cmds = ["npm install -g pnpm@11.9.0 && pnpm install --frozen-lockfile"]
+cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
 cmds = ["pnpm db:generate"]
@@ -12,4 +12,4 @@ cmd = "pnpm api:start"
 
 [variables]
 PNPM_HOME = "/app/.pnpm"
-NIXPACKS_NODE_VERSION = "20"
+NIXPACKS_NODE_VERSION = "22"
