@@ -2,8 +2,11 @@
   "name": "@ai-job-platform/config",
   "version": "0.1.0",
   "private": true,
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
     "dotenv": "^17.4.2",
     "zod": "^4.1.12"

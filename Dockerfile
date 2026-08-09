@@ -25,11 +25,12 @@ RUN pnpm install --frozen-lockfile --prod=false --filter . --filter @ai-job-plat
 COPY . .
 
 RUN pnpm db:generate
+RUN pnpm api:build
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV NODE_OPTIONS=--max-old-space-size=256
+ENV NODE_OPTIONS=--max-old-space-size=192
 
 EXPOSE 3000
 
-CMD ["pnpm", "api:start"]
+CMD ["node", "apps/api/dist/server.js"]

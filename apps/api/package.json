@@ -2,11 +2,12 @@
   "name": "@ai-job-platform/api",
   "version": "0.1.0",
   "private": true,
-  "main": "src/server.ts",
-  "types": "src/server.ts",
+  "main": "dist/server.js",
+  "types": "dist/server.d.ts",
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "dev": "tsx watch src/server.ts",
-    "start": "tsx src/server.ts",
+    "start": "node dist/server.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

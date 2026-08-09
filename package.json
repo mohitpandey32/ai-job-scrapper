@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "api:dev": "pnpm --filter @ai-job-platform/api dev",
+    "api:build": "pnpm --filter @ai-job-platform/config build && pnpm --filter @ai-job-platform/logger build && pnpm --filter @ai-job-platform/validation build && pnpm --filter @ai-job-platform/database build && pnpm --filter @ai-job-platform/ingestion build && pnpm --filter @ai-job-platform/api build",
     "api:start": "pnpm --filter @ai-job-platform/api start",
     "api:typecheck": "pnpm --filter @ai-job-platform/api typecheck",
     "web:dev": "pnpm --filter @ai-job-platform/web dev",
