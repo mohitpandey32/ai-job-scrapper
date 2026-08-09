@@ -20,7 +20,7 @@ COPY packages/ingestion/package.json packages/ingestion/package.json
 COPY packages/logger/package.json packages/logger/package.json
 COPY packages/validation/package.json packages/validation/package.json
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --prod=false --filter . --filter @ai-job-platform/api...
 
 COPY . .
 
@@ -28,6 +28,7 @@ RUN pnpm db:generate
 
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV NODE_OPTIONS=--max-old-space-size=256
 
 EXPOSE 3000
 
