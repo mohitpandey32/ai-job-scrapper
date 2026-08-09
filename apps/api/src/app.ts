@@ -92,6 +92,16 @@ export function createApp() {
   );
   app.use(csrfGuard);
 
+  app.get("/", (_request, response) => {
+    response.json({
+      status: "ok",
+      service: "api",
+      message: "CareerOS API is running. Deploy the frontend separately and point it to this API URL.",
+      health: "/health",
+      ready: "/health/ready",
+    });
+  });
+
   app.use("/health", createHealthRouter(prisma));
   app.use("/api/v1/health", createHealthRouter(prisma));
   app.use("/api/v1/auth", createAuthRouter({ authService, tokenService, config }));

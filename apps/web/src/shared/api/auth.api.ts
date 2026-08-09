@@ -1,4 +1,4 @@
-import { apiRequest } from "./client";
+import { apiRequest, clearCsrfToken, setCsrfToken } from "./client";
 
 export interface PublicUser {
   readonly id: string;
@@ -13,7 +13,10 @@ export interface AuthResponse {
 }
 
 export function getCsrfToken() {
-  return apiRequest<{ csrfToken: string }>("/api/v1/auth/csrf");
+  return apiRequest<{ csrfToken: string }>("/api/v1/auth/csrf").then((response) => {
+    setCsrfToken(response.csrfToken);
+    return response;
+  });
 }
 
 export function signup(input: { email: string; password: string; fullName?: string }) {
@@ -33,10 +36,11 @@ export function login(input: { email: string; password: string }) {
 export function logout() {
   return apiRequest<void>("/api/v1/auth/logout", {
     method: "POST",
+  }).finally(() => {
+    clearCsrfToken();
   });
 }
 
 export function getMe() {
   return apiRequest<AuthResponse>("/api/v1/auth/me");
 }
-

@@ -16,10 +16,12 @@ export function setAuthCookies(
   config: AppConfig,
   tokens: { accessToken: string; refreshToken: string; csrfToken: string },
 ) {
+  const sameSite = getSameSite(config);
+
   response.cookie(accessTokenCookie, tokens.accessToken, {
     httpOnly: true,
     secure: config.isProduction,
-    sameSite: "lax",
+    sameSite,
     domain: config.cookieDomain,
     path: "/",
     maxAge: 15 * 60 * 1000,
@@ -28,7 +30,7 @@ export function setAuthCookies(
   response.cookie(refreshTokenCookie, tokens.refreshToken, {
     httpOnly: true,
     secure: config.isProduction,
-    sameSite: "lax",
+    sameSite,
     domain: config.cookieDomain,
     path: "/api/v1/auth",
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -37,7 +39,7 @@ export function setAuthCookies(
   response.cookie(csrfCookie, tokens.csrfToken, {
     httpOnly: false,
     secure: config.isProduction,
-    sameSite: "lax",
+    sameSite,
     domain: config.cookieDomain,
     path: "/",
     maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -47,7 +49,7 @@ export function setAuthCookies(
 export function clearAuthCookies(response: Response, config: AppConfig) {
   const commonOptions = {
     secure: config.isProduction,
-    sameSite: "lax" as const,
+    sameSite: getSameSite(config),
     domain: config.cookieDomain,
   };
 
@@ -56,3 +58,6 @@ export function clearAuthCookies(response: Response, config: AppConfig) {
   response.clearCookie(csrfCookie, { ...commonOptions, path: "/" });
 }
 
+function getSameSite(config: AppConfig): "none" | "lax" {
+  return config.isProduction ? "none" : "lax";
+}

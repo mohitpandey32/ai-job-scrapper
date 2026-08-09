@@ -1,5 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 const unsafeMethods = new Set(["POST", "PUT", "PATCH", "DELETE"]);
+let csrfTokenCache: string | undefined;
 
 export class ApiError extends Error {
   constructor(
@@ -22,7 +23,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
   }
 
   if (unsafeMethods.has(method)) {
-    const csrfToken = readCookie("csrf_token");
+    const csrfToken = csrfTokenCache ?? readCookie("csrf_token");
     if (csrfToken) {
       headers.set("x-csrf-token", csrfToken);
     }
@@ -47,6 +48,14 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
   }
 
   return payload as T;
+}
+
+export function setCsrfToken(token: string) {
+  csrfTokenCache = token;
+}
+
+export function clearCsrfToken() {
+  csrfTokenCache = undefined;
 }
 
 function readCookie(name: string) {
