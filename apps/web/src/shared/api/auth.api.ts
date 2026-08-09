@@ -10,6 +10,7 @@ export interface PublicUser {
 
 export interface AuthResponse {
   readonly user: PublicUser;
+  readonly csrfToken?: string;
 }
 
 export function getCsrfToken() {
@@ -23,6 +24,11 @@ export function signup(input: { email: string; password: string; fullName?: stri
   return apiRequest<AuthResponse>("/api/v1/auth/signup", {
     method: "POST",
     body: JSON.stringify(input),
+  }).then((response) => {
+    if (response.csrfToken) {
+      setCsrfToken(response.csrfToken);
+    }
+    return response;
   });
 }
 
@@ -30,6 +36,11 @@ export function login(input: { email: string; password: string }) {
   return apiRequest<AuthResponse>("/api/v1/auth/login", {
     method: "POST",
     body: JSON.stringify(input),
+  }).then((response) => {
+    if (response.csrfToken) {
+      setCsrfToken(response.csrfToken);
+    }
+    return response;
   });
 }
 

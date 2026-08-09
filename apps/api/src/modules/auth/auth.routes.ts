@@ -37,7 +37,7 @@ export function createAuthRouter(dependencies: {
     asyncHandler(async (request, response) => {
       const result = await dependencies.authService.signup(request.body, getRequestMeta(request));
       setAuthCookies(response, dependencies.config, result);
-      response.status(201).json({ user: result.user });
+      response.status(201).json({ user: result.user, csrfToken: result.csrfToken });
     }),
   );
 
@@ -47,7 +47,7 @@ export function createAuthRouter(dependencies: {
     asyncHandler(async (request, response) => {
       const result = await dependencies.authService.login(request.body, getRequestMeta(request));
       setAuthCookies(response, dependencies.config, result);
-      response.json({ user: result.user });
+      response.json({ user: result.user, csrfToken: result.csrfToken });
     }),
   );
 
@@ -62,7 +62,7 @@ export function createAuthRouter(dependencies: {
 
       const result = await dependencies.authService.refresh(refreshToken, getRequestMeta(request));
       setAuthCookies(response, dependencies.config, result);
-      response.json({ user: result.user });
+      response.json({ user: result.user, csrfToken: result.csrfToken });
     }),
   );
 
@@ -97,4 +97,3 @@ function getRequestMeta(request: { ip?: string; header(name: string): string | u
     userAgent: request.header("user-agent"),
   };
 }
-
